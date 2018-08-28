@@ -3,18 +3,14 @@ package com.example.titorezende.todolist
 import android.arch.lifecycle.LiveData
 import android.arch.persistence.room.*
 
-/*
- * Copyright (C) 2018 Motorola Mobility, Inc.
- * All Rights Reserved.
- * Motorola Mobility Confidential Restricted.
- */
+
 @Dao
 public interface ToDoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(toDo: ToDoModel): Long?
 
-    @Insert
-    fun insertAll(vararg toDos: ToDoModel)
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertAll(vararg toDos: ToDoModel) :Long
 
     @Query("SELECT * from toDo_table WHERE ID = :id")
     fun getFromID(id: Long ) : LiveData<ToDoModel>

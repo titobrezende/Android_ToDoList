@@ -5,11 +5,7 @@ import android.arch.persistence.room.Room
 import android.arch.persistence.room.RoomDatabase
 import android.content.Context
 
-/*
- * Copyright (C) 2018 Motorola Mobility, Inc.
- * All Rights Reserved.
- * Motorola Mobility Confidential Restricted.
- */
+
 @Database(entities = arrayOf(ToDoModel::class),version = 1)
 abstract class ToDoRoomDatabase : RoomDatabase() {
     abstract fun toDoDao() : ToDoDao

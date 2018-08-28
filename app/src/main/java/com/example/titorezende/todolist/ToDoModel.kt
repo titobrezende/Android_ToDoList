@@ -8,11 +8,7 @@ import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
 
-/*
- * Copyright (C) 2018 Motorola Mobility, Inc.
- * All Rights Reserved.
- * Motorola Mobility Confidential Restricted.
- */
+
 
 /*
 ●	To_do item fields: Title, Description, CreatedDate, Done.
