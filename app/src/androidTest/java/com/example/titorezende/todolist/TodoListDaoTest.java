@@ -44,21 +44,48 @@ public class TodoListDaoTest {
         mDatabase.close();
     }
 
-    @Test void initDbTest(){
+    @Test
+    public void initDbTest(){
         Assert.assertNotNull(mDatabase);
+        Assert.assertNotNull(mToDoDao);
     }
+
+    ToDoModel FakeToDoItem() {
+        ToDoModel toDo = new ToDoModel( "Title", "Description",
+                                       LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), false);
+        return toDo;
+    }
+
 
     @Test
     public void insertToDoTest() throws InterruptedException {
-        ToDoModel toDo = new ToDoModel(1L, "Title", "Description", LocalDateTime.now().toEpochSecond(ZoneOffset.UTC), false);
-        //Assert.assertNotNull(mDatabase);
-
         //Method to be tested
-        long toDoId = mDatabase.toDoDao().insert(toDo);
+        ToDoModel toDo = FakeToDoItem();
+        long toDoId = mToDoDao.insert(toDo);
+        toDo.setMId(toDoId);
+        //assertions
+        ToDoModel toDoFromDb = LiveDataTestUtil.getValue(mToDoDao.getFromID(toDoId));
+        Assert.assertEquals(toDo.getMId(),toDoId);
+        Assert.assertEquals(toDo,toDoFromDb);
+    }
+
+    @Test
+    public void updateToDoTest() throws InterruptedException {
+        //prepare
+        ToDoModel fakeToDo = FakeToDoItem();
+        long toDoId = mToDoDao.insert(fakeToDo);
+        fakeToDo.setMId(toDoId);
+        ToDoModel toDoFromDbBefore = LiveDataTestUtil.getValue(mToDoDao.getFromID(toDoId));
+        fakeToDo.setMTitle("New Title");
+        fakeToDo.setMDescription("New description");
+        Long newDateTime = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC);
+        fakeToDo.setMCreatedDate(newDateTime);
+        fakeToDo.setMDone(true);
+        //update
+        mToDoDao.update(fakeToDo);
 
         //assertions
-        List<ToDoModel> toDoListFromDb = LiveDataTestUtil.getValue(mDatabase.toDoDao().toDoList());
-        Assert.assertEquals(toDoId,1L);
-        Assert.assertEquals(toDo,toDoListFromDb.get(0));
+        ToDoModel toDoFromDbAfter = LiveDataTestUtil.getValue(mToDoDao.getFromID(toDoId));
+        Assert.assertEquals(toDoFromDbAfter.getMTitle(),"New Title");
     }
 }

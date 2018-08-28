@@ -13,6 +13,12 @@ public interface ToDoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(toDo: ToDoModel): Long?
 
+    @Insert
+    fun insertAll(vararg toDos: ToDoModel)
+
+    @Query("SELECT * from toDo_table WHERE ID = :id")
+    fun getFromID(id: Long ) : LiveData<ToDoModel>
+
     @Delete
     fun delete(toDo: ToDoModel)
 

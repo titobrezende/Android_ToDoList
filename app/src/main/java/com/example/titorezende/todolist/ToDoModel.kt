@@ -25,9 +25,6 @@ import java.util.*
 
 @Entity(tableName = "toDo_table")
 data class ToDoModel(
-        @PrimaryKey(autoGenerate = true)
-        @ColumnInfo(name = "ID")
-        var mId: Long = 0,
         @ColumnInfo(name = "Title")
         @NonNull
         var mTitle: String = "",
@@ -40,5 +37,8 @@ data class ToDoModel(
         @NonNull
         var mDone: Boolean = false
 ) {
+        @PrimaryKey(autoGenerate = true)
+        @ColumnInfo(name = "ID")
+        var mId: Long = 0
 
 }
