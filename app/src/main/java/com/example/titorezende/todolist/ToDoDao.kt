@@ -10,7 +10,7 @@ public interface ToDoDao {
     fun insert(toDo: ToDoModel): Long?
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertAll(vararg toDos: ToDoModel) :Long
+    fun insertAll(vararg toDos: ToDoModel) :LongArray
 
     @Query("SELECT * from toDo_table WHERE ID = :id")
     fun getFromID(id: Long ) : LiveData<ToDoModel>

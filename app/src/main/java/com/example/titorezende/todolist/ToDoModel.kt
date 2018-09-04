@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo
 import android.arch.persistence.room.Entity
 import android.arch.persistence.room.PrimaryKey
 import android.support.annotation.NonNull
+import android.text.format.DateUtils
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 import java.util.*
@@ -27,8 +28,7 @@ data class ToDoModel(
         @ColumnInfo(name = "Description")
         var mDescription: String = "",
         @ColumnInfo(name = "CreatedDate")
-        @NonNull
-        var mCreatedDate: Long = LocalDateTime.now().toEpochSecond(ZoneOffset.UTC),
+        var mCreatedDate: Date = Date(),
         @ColumnInfo(name = "Done")
         @NonNull
         var mDone: Boolean = false
@@ -37,4 +37,9 @@ data class ToDoModel(
         @ColumnInfo(name = "ID")
         var mId: Long = 0
 
+        fun toDateString(): String {
+                return DateUtils.getRelativeTimeSpanString(mCreatedDate.time, DateUtils.DAY_IN_MILLIS,
+                        DateUtils.DAY_IN_MILLIS,
+                        DateUtils.FORMAT_ABBREV_ALL) as String
+        }
 }
